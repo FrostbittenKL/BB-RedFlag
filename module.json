@@ -1,11 +1,6 @@
 {
   "id": "bb-redflag",
   "title": "BB's Red Flag",
-  "version": "1.0.0",
-  "compatibility": {
-    "minimum": "12",
-    "verified": "12"
-  },
   "description": "Module adds a \"red flag\" button to the token control menu for players or GM to signal discomfort or issues during the game.",
   "authors": [
     {
@@ -15,6 +10,12 @@
       "flags": {}
     }
   ],
+  "url": "https://github.com/FrostbittenKL/BB-RedFlag",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
   "esmodules": [
     "module/redflag.js"
   ],
@@ -29,5 +30,7 @@
             "name": "Deutsch",
             "path": "lang/de.json"
         }
-    ]
+    ],
+    "manifest": "https://raw.githubusercontent.com/FrostbittenKL/BB-RedFlag/main/module.json",
+    "download": "https://github.com/FrostbittenKL/BB-RedFlag/archive/main.zip"
 }
