@@ -1,0 +1,12 @@
+{
+    "RED_FLAG": {
+        "AlertSoundName": "Alarm Sound",
+        "AlertSoundHint": "Sound wird abgespielt wenn jemand die Rote Flagge hebt (leer = kein Sound)",
+        "ButtonTitle": "Red Flag",
+        "DialogContent": "Bist du sicher dass du die 🚨 Rote Flagge heben willst?",
+        "DialogTitle": "Rote Flagge bestätigen",
+        "NO": "Nein",
+        "RedFlagMessage": "{userName} hat die 🚨 Rote Flagge gehoben!",
+        "YES": "Ja"        
+    }
+}
