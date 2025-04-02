@@ -16,6 +16,25 @@ Hooks.once('init', () => {
     });
 });
 
+Hooks.once('ready', () => {
+    // Wait a short time to ensure game.socket is available
+    setTimeout(() => {
+        if (!game.socket) {
+            console.error("BrettspielBayern | ❌ game.socket is still undefined! Foundry might not be fully loaded.");
+            return;
+        }
+
+        console.log("BrettspielBayern | ✅ Foundry socket system initialized!");
+
+        game.socket.on("module.bb-redflag", (data) => {
+            console.log("BrettspielBayern | 🔴 Red Flag notification received:", data);
+            ui.notifications.info(data.message, { permanent: true });
+        });
+
+        console.log("BrettspielBayern | ✅ Red Flag socket listener added successfully.");
+    }, 1000); // Delay by 1 second
+});
+
 // Hook into scene control buttons
 Hooks.on("getSceneControlButtons", addRedFlagButton);
 
@@ -46,11 +65,11 @@ function addRedFlagButton(controls) {
                                     whisper: [] // Empty array to send to everyone
                                 });
 
-                                // Display system-wide notification (pop-up)
-                                ui.notifications.info(game.i18n.format("RED_FLAG.RedFlagMessage", {
-                                    userName: game.user.name
-                                }), { permanent: true });
-
+                                // Send the notification event
+                                game.socket.emit("module.bb-redflag", {
+                                   message: game.i18n.format("RED_FLAG.RedFlagMessage", { userName: game.user.name })
+                                });
+                               
                                 // Retrieve the configured sound file from settings
                                 const soundFile = game.settings.get("bb-redflag", "alertSound");
                                 
