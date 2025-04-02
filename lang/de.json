@@ -1,15 +1,21 @@
 {
     "RED_FLAG": {
         "ButtonTitle": "Red Flag",
+        "ButtonNo": "Nein",
+        "ButtonYes": "Ja",
         "DialogContent": "Bist du sicher dass du die 🚨 Rote Flagge 🚨 heben willst?",
+        "DialogContentReason": "Grund (optional)",
+        "DialogContentReasonPlaceholder": "Gib hier deine Begründung an...",
         "DialogTitle": "Rote Flagge bestätigen",
-        "NO": "Nein",
         "RedFlagMessage": "🚨 {userName} hat die Rote Flagge gehoben! 🚨",
         "RedFlagAnonMessage": "🚨 Eine Rote Flagge wurde gehoben! 🚨",
+        "RedFlagAnonAlias": "System",
+        "RedFlagReason": "Grund",
         "SettAlertSoundName": "Alarm Sound",
         "SettAlertSoundHint": "Sound wird abgespielt wenn jemand die Rote Flagge hebt (leer = kein Sound)",
         "SettAnonModeName": "Anonyme Rote Flaggen",
         "SettAnonModeHint": "Anonymer Modus: Keiner sieht wer die Rote Flagge gehoben hat.",
-        "YES": "Ja"        
+        "SettReasonFeatureName": "Option für Begründung hinzufügen",
+        "SettReasonFeatureHint": "Spieler können eine optionale Begründung für die Rote Flagge angeben." 
     }
 }
