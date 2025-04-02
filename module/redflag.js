@@ -2,9 +2,9 @@ Hooks.once('init', () => {
     console.log("BrettspielBayern | Red Flag module loaded");
     
     // Define the module settings
-    game.settings.register("bb-redflag", "alertSound", {
-        name: game.i18n.localize("RED_FLAG.AlertSoundName"),
-        hint: game.i18n.localize("RED_FLAG.AlertSoundHint"),
+    game.settings.register("bb-redflag", "alertSound", { // play alert sound, if sound file is configured
+        name: game.i18n.localize("RED_FLAG.SettAlertSoundName"),
+        hint: game.i18n.localize("RED_FLAG.SettAlertSoundHint"),
         scope: "world",
         config: true,
         type: String,
@@ -13,6 +13,14 @@ Hooks.once('init', () => {
             types: ["audio"],
             extensions: [".mp3", ".wav", ".ogg", ".m4a"]
         }
+    });
+    game.settings.register("bb-redflag", "anonMode", { // anonymous raising of red flag 
+        name: game.i18n.localize("RED_FLAG.SettAnonModeName"),
+        hint: game.i18n.localize("RED_FLAG.SettAnonModeHint"),
+        scope: "world",
+        config: true,
+        type: Boolean,
+        default: false
     });
 });
 
@@ -24,7 +32,7 @@ Hooks.once('ready', () => {
         console.debug("BrettspielBayern | ✅ Foundry socket system initialized!");
 
         game.socket.on("module.bb-redflag", (data) => {
-            handleNotificationEvent(data);
+            handleRedFlagEvent(data);
         });
 
         console.debug("BrettspielBayern | ✅ Red Flag socket listener added successfully.");
@@ -50,21 +58,7 @@ function addRedFlagButton(controls) {
                         yes: {
                             label: game.i18n.localize("RED_FLAG.YES"),
                             callback: () => {
-                                // Localized chat message
-                                let messageText = game.i18n.format("RED_FLAG.RedFlagMessage", {
-                                    userName: game.user.name
-                                });
-
-                                // Send localized message to the chat
-                                ChatMessage.create({
-                                    content: messageText,
-                                    whisper: [] // Empty array to send to everyone
-                                });
-
-                                // Send the notification event
-                                game.socket.emit("module.bb-redflag", { message: messageText });
-                                // Pretend the emitter was called
-                                handleNotificationEvent({ message: messageText });
+                                raiseRedFlag();
                             }
                         },
                         no: {
@@ -77,10 +71,48 @@ function addRedFlagButton(controls) {
     }
 }
 
-function handleNotificationEvent(data) {
+// function to raise the red flag and notify other clients
+function raiseRedFlag() {
+    const isAnonMode = game.settings.get("bb-redflag", "anonMode");
+    let messageText = "";
+
+    // generate red flag message
+    if (true === isAnonMode) {
+        messageText = game.i18n.format("RED_FLAG.RedFlagAnonMessage");
+    }
+    else {
+        messageText = game.i18n.format("RED_FLAG.RedFlagMessage", {
+            userName: game.user.name
+        });
+
+        // Send message to the chat with names enabled
+        ChatMessage.create({
+            content: messageText,
+            whisper: [] // Empty array to send to everyone
+        });
+    }
+
+    // Send the notification event to other clients
+    game.socket.emit("module.bb-redflag", { message: messageText, anonMode: isAnonMode });
+    // Pretend the emitter was called
+    handleRedFlagEvent({ message: messageText, anonMode: isAnonMode });
+}
+
+// function for each client to handle the red flag
+function handleRedFlagEvent(data) {
     console.debug("BrettspielBayern | 🔴 Red Flag notification received:", data);
     // Send UI notification
     ui.notifications.info(data.message, { permanent: true });
+
+    // when in anonymous mode, the chat message needs to be sent from GM
+    if (data.anonMode && game.user.isGM) {
+        ChatMessage.create({
+            content: data.message,
+            speaker: { alias: "System" },
+            user: game.user,
+            whisper: [] // Empty array to send to everyone
+        });
+    }
 
     // Retrieve the configured sound file from settings
     const soundFile = game.settings.get("bb-redflag", "alertSound");
