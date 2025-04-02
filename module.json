@@ -11,7 +11,7 @@
         }
     ],
     "url": "https://github.com/FrostbittenKL/BB-RedFlag",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "compatibility": {
         "minimum": "12",
         "verified": "12"
@@ -32,6 +32,8 @@
         }
     ],
     "manifest": "https://raw.githubusercontent.com/FrostbittenKL/BB-RedFlag/main/module.json",
-    "download": "https://github.com/FrostbittenKL/BB-RedFlag/archive/main.zip",
+    "download": "https://github.com/FrostbittenKL/BB-RedFlag/archive/1.1.0.zip",
+    "changelog": "https://github.com/FrostbittenKL/BB-RedFlag/blob/main/CHANGELOG.md",
+    "readme": "https://github.com/FrostbittenKL/BB-RedFlag/blob/main/README.md",
     "socket": true
 }
