@@ -1,15 +1,21 @@
 {
     "RED_FLAG": {
         "ButtonTitle": "Red Flag",
+        "ButtonNo": "No",
+        "ButtonYes": "Yes",
         "DialogContent": "Are you sure you want to raise the 🚨 Red Flag 🚨?",
+        "DialogContentReason": "Reason (optional)",
+        "DialogContentReasonPlaceholder": "Enter your reason here...",
         "DialogTitle": "Confirm Red Flag",
-        "NO": "No",
         "RedFlagMessage": "🚨 {userName} has raised the Red Flag! 🚨",
         "RedFlagAnonMessage": "🚨 A Red Flag has been raised! 🚨",
+        "RedFlagAnonAlias": "System",
+        "RedFlagReason": "Reason",
         "SettAlertSoundName": "Alert Sound",
         "SettAlertSoundHint": "Sound is played when someone raises the red flag (empty = no sound).",
         "SettAnonModeName": "Anonymous Red Flags",
-        "SettAnonModeHint": "If enabled, red flags will be raised anonymously.",
-        "YES": "Yes"        
+        "SettAnonModeHint": "If enabled, red flags will be raised anonymously.", 
+        "SettReasonFeatureName": "Add Reason option",
+        "SettReasonFeatureHint": "If enabled, players may add an optional reason for the red flag." 
     }
 }
