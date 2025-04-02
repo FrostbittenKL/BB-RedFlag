@@ -1,25 +1,25 @@
 {
-  "id": "bb-redflag",
-  "title": "BB's Red Flag",
-  "description": "Module adds a \"red flag\" button to the token control menu for players or GM to signal discomfort or issues during the game.",
-  "authors": [
-    {
-      "name": "FrostbittenKL",
-      "url": "www.brettspiel-bayern.de",
-      "discord": "FrostbittenKL#4786",
-      "flags": {}
-    }
-  ],
-  "url": "https://github.com/FrostbittenKL/BB-RedFlag",
-  "version": "1.0.0",
-  "compatibility": {
-    "minimum": "12",
-    "verified": "12"
-  },
-  "esmodules": [
-    "module/redflag.js"
-  ],
-  "languages": [
+    "id": "bb-redflag",
+    "title": "BB's Red Flag",
+    "description": "Module adds a \"red flag\" button to the token control menu for players or GM to signal discomfort or issues during the game.",
+    "authors": [
+        {
+            "name": "FrostbittenKL",
+            "url": "www.brettspiel-bayern.de",
+            "discord": "FrostbittenKL#4786",
+            "flags": {}
+        }
+    ],
+    "url": "https://github.com/FrostbittenKL/BB-RedFlag",
+    "version": "1.0.0",
+    "compatibility": {
+        "minimum": "12",
+        "verified": "12"
+    },
+    "esmodules": [
+        "module/redflag.js"
+    ],
+    "languages": [
         {
             "lang": "en",
             "name": "English",
