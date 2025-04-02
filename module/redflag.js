@@ -1,5 +1,5 @@
 Hooks.once('init', () => {
-    console.log("BrettspielBayern Red Flag | Red Flag module loaded");
+    console.log("BrettspielBayern | Red Flag module loaded");
     
     // Define the module settings
     game.settings.register("bb-redflag", "alertSound", {
@@ -17,22 +17,18 @@ Hooks.once('init', () => {
 });
 
 Hooks.once('ready', () => {
-    // Wait a short time to ensure game.socket is available
-    setTimeout(() => {
-        if (!game.socket) {
-            console.error("BrettspielBayern | ❌ game.socket is still undefined! Foundry might not be fully loaded.");
-            return;
-        }
-
-        console.log("BrettspielBayern | ✅ Foundry socket system initialized!");
+    if (!game.socket) {
+        console.error("BrettspielBayern | ❌ game.socket is still undefined! Foundry might not be fully loaded.");
+    } 
+    else {
+        console.debug("BrettspielBayern | ✅ Foundry socket system initialized!");
 
         game.socket.on("module.bb-redflag", (data) => {
-            console.log("BrettspielBayern | 🔴 Red Flag notification received:", data);
-            ui.notifications.info(data.message, { permanent: true });
+            handleNotificationEvent(data);
         });
 
-        console.log("BrettspielBayern | ✅ Red Flag socket listener added successfully.");
-    }, 1000); // Delay by 1 second
+        console.debug("BrettspielBayern | ✅ Red Flag socket listener added successfully.");
+    }
 });
 
 // Hook into scene control buttons
@@ -55,32 +51,20 @@ function addRedFlagButton(controls) {
                             label: game.i18n.localize("RED_FLAG.YES"),
                             callback: () => {
                                 // Localized chat message
-                                let message = game.i18n.format("RED_FLAG.RedFlagMessage", {
+                                let messageText = game.i18n.format("RED_FLAG.RedFlagMessage", {
                                     userName: game.user.name
                                 });
 
                                 // Send localized message to the chat
                                 ChatMessage.create({
-                                    content: message,
+                                    content: messageText,
                                     whisper: [] // Empty array to send to everyone
                                 });
 
                                 // Send the notification event
-                                game.socket.emit("module.bb-redflag", {
-                                   message: game.i18n.format("RED_FLAG.RedFlagMessage", { userName: game.user.name })
-                                });
-                               
-                                // Retrieve the configured sound file from settings
-                                const soundFile = game.settings.get("bb-redflag", "alertSound");
-                                
-                                // Play alert sound
-                                if (soundFile && soundFile.trim() !== "") {
-                                    AudioHelper.play({
-                                        src: soundFile,
-                                        volume: 1.0,
-                                        loop: false
-                                    }, true);
-                                }
+                                game.socket.emit("module.bb-redflag", { message: messageText });
+                                // Pretend the emitter was called
+                                handleNotificationEvent({ message: messageText });
                             }
                         },
                         no: {
@@ -90,5 +74,23 @@ function addRedFlagButton(controls) {
                 }).render(true);
             }
         });
+    }
+}
+
+function handleNotificationEvent(data) {
+    console.debug("BrettspielBayern | 🔴 Red Flag notification received:", data);
+    // Send UI notification
+    ui.notifications.info(data.message, { permanent: true });
+
+    // Retrieve the configured sound file from settings
+    const soundFile = game.settings.get("bb-redflag", "alertSound");
+                                
+    // Play alert sound
+    if (soundFile && soundFile.trim() !== "") {
+        AudioHelper.play({
+            src: soundFile,
+            volume: 1.0,
+            loop: false
+        }, false); // false means play sound only locally
     }
 }
