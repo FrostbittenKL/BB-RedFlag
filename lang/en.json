@@ -3,10 +3,10 @@
         "AlertSoundName": "Alert Sound",
         "AlertSoundHint": "Sound is played when someone raises the red flag (empty = no sound)",
         "ButtonTitle": "Red Flag",
-        "DialogContent": "Are you sure you want to raise the 🚨 Red Flag?",
+        "DialogContent": "Are you sure you want to raise the 🚨 Red Flag 🚨?",
         "DialogTitle": "Confirm Red Flag",
         "NO": "No",
-        "RedFlagMessage": "{userName} has raised the 🚨 Red Flag!",
+        "RedFlagMessage": "🚨 {userName} has raised the Red Flag! 🚨",
         "YES": "Yes"        
     }
 }
